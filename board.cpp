@@ -7,12 +7,21 @@
 
 #include "board.h"
 #include "agent.h"
+#include "random.h"
+#include <assert.h>
 #include <tuple>
 #include <iostream>
 
 Board::Board(int width, int depth) {
     m_width = width;
     m_depth = depth;
+    m_rProb = 0.0;
+}
+
+Board::Board(int width, int depth, double prob) {
+    m_width = width;
+    m_depth = depth;
+    m_rProb = prob;
 }
 
 int Board::convertPos(int x, int y) {
@@ -22,14 +31,31 @@ int Board::convertPos(int x, int y) {
 
 void Board::init() {
     //Creates board and populates with random agents.
+    
+    //Checks that board hasn't already been initialised.
+    assert(m_initialised);
+            
     for (int i = 0; i < m_depth; i++)
         for (int j = 0; j < m_width; j++)
             m_matrix.push_back(new Agent(i, j));
-    
+
     m_initialised = true;
 }
 
-bool Board::getBoardState() {
+void Board::init(double prob) {
+    //Creates board and populates with random agents using a set probability.
+    
+    //Checks that board hasn't already been initialised.
+    
+            
+    for (int i = 0; i < m_depth; i++)
+        for (int j = 0; j < m_width; j++)
+            m_matrix.push_back(new Agent(i, j, prob));
+
+    m_initialised = true;
+}
+
+bool Board::getInitState() {
     //Checks whether the board has been set up (i.e. initialised).
     return m_initialised;
 }
@@ -39,6 +65,8 @@ Agent* Board::getAgent(int x, int y) {
 }
 
 void Board::printLine() {
+    // Pretty prints horizontal edges of board.
+    // (Vertical component handled in printBoard()).
     std::cout << " ";
     
     for (int i = 0; i < m_depth; i++)
@@ -102,7 +130,7 @@ bool Board::checkUpperNeigh(std::tuple<int, int> pos_tuple) {
     //Checks whether upper (y - 1) neighbour is alive and returns true if yes.
     if (std::get<1>(pos_tuple) == 0) { // Checks if at upper boundary, i.e. y = 0.
             if(m_matrix.at(convertPos(std::get<0>(pos_tuple),
-                    m_depth))->checkState() == true) //If yes, wrap to lower boundary (sets y = m_depth - 1).
+                    m_depth - 1))->checkState() == true) //If yes, wrap to lower boundary (sets y = m_depth - 1).
                 return true;
         } else {
             if(m_matrix.at(convertPos(std::get<0>(pos_tuple), 
@@ -131,7 +159,7 @@ void Board::updateState() {
     
      //Check every state and neighbours for all agents in the matrix
     for (int i = 0; i < m_width; i++)
-        for (int j = 0; i < m_depth; j++) {
+        for (int j = 0; j < m_depth; j++) {
             int alive_neighs{0};
             auto pos_tuple = std::make_tuple(i, j);
             
@@ -145,11 +173,19 @@ void Board::updateState() {
                 alive_neighs++;
             
             if (m_matrix.at(i + m_width * j)->checkState()) // Current cell is alive.
-                if (alive_neighs == 0 || alive_neighs == 1 || alive_neighs == 4) // Too few or too many neighbours?
+                if (alive_neighs == 0 || alive_neighs == 4) // Too few or too many neighbours?
                     matrix_copy.at(i + m_width * j)->switchState(); // If yes, kill cell.
             else // Current cell is dead.
-                if (alive_neighs == 3) // Exactly three neighbours?
-                    matrix_copy.at(i + m_width * j)->switchState(); // If no, resurrect cell.
+                if (alive_neighs == 2) // Two neighbours?
+                    matrix_copy.at(i + m_width * j)->switchState(); // If yes, resurrect cell.
+                
+            //Resurrects cells based on pre-determined rProb
+            //TODO: MOVE TO OWN FUNCTION
+            // i.e. if cell is still dead at this point
+            if (!m_matrix.at(i + m_width * j)->checkState()) {
+                if (generateRandomProb() < m_rProb) // If rProb is zero, then no cells are resurrected.
+                    matrix_copy.at(i + m_width * j)->switchState();
+            }
         }
     //Replaces current matrix with updated copy.
     m_matrix = matrix_copy;

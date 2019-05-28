@@ -24,12 +24,15 @@ private:
     bool m_initialised;
     int  m_width;
     int  m_depth;
+    double m_rProb;
     std::vector <Agent*> m_matrix;
 public:
     Board(int width, int depth);
+    Board(int width, int depth, double res);
     int convertPos(int x, int y);
     void init();
-    bool getBoardState();
+    void init(double prob);
+    bool getInitState();
     Agent* getAgent(int x, int y);
     void printBoard();
     void printLine();

@@ -9,7 +9,17 @@
 #include <tuple>
 
 Agent::Agent(int x, int y) {
-    if (getRandomNumber(0,1) == 0)
+    if (coinFlip() == 0)
+        m_isAlive = false;
+    else
+        m_isAlive = true;
+    
+    m_posx = x;
+    m_posy = y;
+}
+
+Agent::Agent(int x, int y, double prob) {
+    if (generateRandomProb() <= 0.5)
         m_isAlive = false;
     else
         m_isAlive = true;

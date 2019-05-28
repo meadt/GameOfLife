@@ -24,11 +24,16 @@ int main(int argc, char** argv) {
     int depth{10};
     
     //Remember to delete board!
-    Board board(width, depth);
+    Board board(width, depth, 0.15);
     
-    board.init();
-    
+    board.init(0.5);
     board.printBoard();
+    
+    do {
+        board.updateState();
+        board.printBoard();
+    } while (true);
+
     
     return 0;
 }

@@ -13,7 +13,8 @@
 #include <random>
 #include <ctime>
 
-int getRandomNumber(int min, int max);
+int coinFlip();
+double generateRandomProb();
 
 #endif /* RANDOM_H */
 

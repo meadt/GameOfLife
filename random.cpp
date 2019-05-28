@@ -9,7 +9,12 @@ namespace MyRandom {
 	std::mt19937 mersenne(static_cast<std::mt19937::result_type>(std::time(nullptr)));
 }
 
-int getRandomNumber(int min, int max) {
-	std::uniform_int_distribution<> die(min, max);
+int coinFlip() {
+	std::uniform_int_distribution<> die(0, 1);
         return die(MyRandom::mersenne);
+}
+
+double generateRandomProb() {
+    std::uniform_real_distribution<> dis(0,1);
+    return dis(MyRandom::mersenne);
 }

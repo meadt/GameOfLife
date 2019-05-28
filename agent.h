@@ -26,7 +26,8 @@ private:
     int m_posx;
     int m_posy;
 public:
-    Agent(int x, int y); 
+    Agent(int x, int y);
+    Agent(int x, int y, double prob);
     bool checkState();
     std::tuple<int, int> getPos();
     void switchState();
