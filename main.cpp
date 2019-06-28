@@ -15,27 +15,27 @@
 #include "random.h"
 #include "agent.h"
 #include "board.h"
+#include "display.h"
 #include <cstdlib>
 #include <iostream> 
 
+int width{5};
+int depth{5};
+
+Board* board = new Board(width, depth, 0.15);
+    
+extern Board *BOARDPOINTER = board;
+
 int main(int argc, char** argv) {
     
-    int width{5};
-    int depth{10};
-    
     //Remember to delete board!
-    Board board(width, depth, 0.15);
     
-    board.init(0.5);
-    board.printBoard();
+    // Create agents with a probability of 50%
+    board->init(0.5);
     
-    do {
-        board.updateState();
-        board.printBoard();
-    } while (true);
-
+    displayGlui(argc, argv);
     
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 

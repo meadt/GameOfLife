@@ -6,6 +6,8 @@
                    projectFiles="true">
       <itemPath>agent.h</itemPath>
       <itemPath>board.h</itemPath>
+      <itemPath>display.h</itemPath>
+      <itemPath>global.h</itemPath>
       <itemPath>random.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -17,6 +19,7 @@
                    projectFiles="true">
       <itemPath>agent.cpp</itemPath>
       <itemPath>board.cpp</itemPath>
+      <itemPath>display.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>random.cpp</itemPath>
     </logicalFolder>
@@ -42,8 +45,21 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandLine>--std=c++11</commandLine>
+          <standard>8</standard>
+          <incDir>
+            <pElem>/usr/include/glui/src/include/GL</pElem>
+          </incDir>
         </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-L/usr/lib64</linkerOptionItem>
+            <linkerLibLibItem>GL</linkerLibLibItem>
+            <linkerLibLibItem>GLU</linkerLibLibItem>
+            <linkerLibLibItem>glut</linkerLibLibItem>
+            <linkerOptionItem>-L/usr/include/glui/src/lib</linkerOptionItem>
+            <linkerLibLibItem>glui</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="agent.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -52,6 +68,12 @@
       <item path="board.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="board.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="display.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="display.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="global.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -87,6 +109,12 @@
       <item path="board.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="board.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="display.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="display.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="global.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/agent.o \
 	${OBJECTDIR}/board.o \
+	${OBJECTDIR}/display.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/random.o
 
@@ -45,8 +46,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=--std=c++11
-CXXFLAGS=--std=c++11
+CCFLAGS=
+CXXFLAGS=
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -55,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/usr/lib64 -lGL -lGLU -lglut -L/usr/include/glui/src/lib -lglui
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -68,22 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gameoflife: ${OBJECTFILES}
 ${OBJECTDIR}/agent.o: agent.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/agent.o agent.cpp
+	$(COMPILE.cc) -g -I/usr/include/glui/src/include/GL -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/agent.o agent.cpp
 
 ${OBJECTDIR}/board.o: board.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/board.o board.cpp
+	$(COMPILE.cc) -g -I/usr/include/glui/src/include/GL -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/board.o board.cpp
+
+${OBJECTDIR}/display.o: display.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/glui/src/include/GL -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/display.o display.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/usr/include/glui/src/include/GL -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/random.o: random.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/random.o random.cpp
+	$(COMPILE.cc) -g -I/usr/include/glui/src/include/GL -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/random.o random.cpp
 
 # Subprojects
 .build-subprojects:

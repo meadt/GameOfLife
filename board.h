@@ -30,9 +30,12 @@ public:
     Board(int width, int depth);
     Board(int width, int depth, double res);
     int convertPos(int x, int y);
+    Board* returnPointer();
     void init();
     void init(double prob);
     bool getInitState();
+    int getWidth();
+    int getDepth();
     Agent* getAgent(int x, int y);
     void printBoard();
     void printLine();

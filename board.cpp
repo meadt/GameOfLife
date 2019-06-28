@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-
 #include "board.h"
 #include "agent.h"
 #include "random.h"
 #include <assert.h>
 #include <tuple>
 #include <iostream>
+
 
 Board::Board(int width, int depth) {
     m_width = width;
@@ -29,6 +29,10 @@ int Board::convertPos(int x, int y) {
     return x + m_width * y;
 }
 
+Board* Board::returnPointer() {
+    return this;
+}
+
 void Board::init() {
     //Creates board and populates with random agents.
     
@@ -43,21 +47,29 @@ void Board::init() {
 }
 
 void Board::init(double prob) {
-    //Creates board and populates with random agents using a set probability.
+    // Creates board, populates with random agents using a set probability
+    // and sets the global board point to the board that was just created.
     
     //Checks that board hasn't already been initialised.
-    
             
     for (int i = 0; i < m_depth; i++)
         for (int j = 0; j < m_width; j++)
             m_matrix.push_back(new Agent(i, j, prob));
-
+    
     m_initialised = true;
 }
 
 bool Board::getInitState() {
     //Checks whether the board has been set up (i.e. initialised).
     return m_initialised;
+}
+
+int Board::getWidth() {
+    return m_width;
+}
+
+int Board::getDepth() {
+    return m_width;
 }
 
 Agent* Board::getAgent(int x, int y) {
@@ -77,7 +89,6 @@ void Board::printLine() {
 
 void Board::printBoard() {
     //Prints board. 
-    //TODO: Find a way for it to be cleared after waiting half a second.
     
     //Top line:
     printLine();

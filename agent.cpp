@@ -32,6 +32,10 @@ bool Agent::checkState() {
     return m_isAlive;
 }
 
+std::tuple<int, int> Agent::getPos() {
+    return std::make_tuple(m_posx, m_posy);
+}
+
 void Agent::switchState() {
     if (!m_isAlive)
         m_isAlive = true;
